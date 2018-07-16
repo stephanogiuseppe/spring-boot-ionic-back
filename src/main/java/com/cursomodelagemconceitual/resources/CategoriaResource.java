@@ -22,10 +22,6 @@ public class CategoriaResource {
 		
 		Categoria categoria = categoriaService.buscar(id);
 		
-		// insert (test)
-		// INSERT INTO CATEGORIA ( NOME) VALUES ('Escritório');
-		// INSERT INTO CATEGORIA ( NOME) VALUES ('Informática');
-		
 		return ResponseEntity.ok().body(categoria);
 	}
 }
