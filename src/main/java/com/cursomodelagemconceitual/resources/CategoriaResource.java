@@ -1,5 +1,7 @@
 package com.cursomodelagemconceitual.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +13,7 @@ import com.cursomodelagemconceitual.domain.Categoria;
 import com.cursomodelagemconceitual.services.CategoriaService;
 
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value = "/categorias")
 public class CategoriaResource {
 	
 	@Autowired
@@ -23,5 +25,13 @@ public class CategoriaResource {
 		Categoria categoria = categoriaService.find(id);
 		
 		return ResponseEntity.ok().body(categoria);
+	}
+	
+	@RequestMapping
+	public ResponseEntity<?> findAll() {
+		
+		List<Categoria> categorias = categoriaService.findAll();
+		
+		return ResponseEntity.ok().body(categorias);
 	}
 }

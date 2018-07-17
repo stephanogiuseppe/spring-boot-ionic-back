@@ -1,5 +1,6 @@
 package com.cursomodelagemconceitual.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,13 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	public List<Categoria> findAll() {
+
+		List<Categoria> categorias = categoriaRepository.findAll();
+
+		return categorias;
+	}
+	
 	public Categoria find(Integer id) {
 
 		Optional<Categoria> categoria = categoriaRepository.findById(id);
