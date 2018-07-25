@@ -2,7 +2,9 @@ package com.cursomodelagemconceitual.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -34,7 +37,11 @@ public class Produto implements Serializable {
 		joinColumns = @JoinColumn(name="produto_id"),
 		inverseJoinColumns = @JoinColumn(name="categoria_id")
 	)
+
 	private List<Categoria> categorias = new ArrayList<>();
+
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ProdutoPedido> produtosPedidos = new HashSet<>();
 
 	public Produto (){
 	}
@@ -44,6 +51,16 @@ public class Produto implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+	}
+	
+	public List<Pedido> getPedidos() {
+		List<Pedido> pedidos = new ArrayList<>();
+
+		for (ProdutoPedido produtoPedido : produtosPedidos) {
+			pedidos.add(produtoPedido.getPedido());
+		}
+
+		return pedidos;
 	}
 
 	public Integer getId() {
@@ -76,6 +93,14 @@ public class Produto implements Serializable {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public Set<ProdutoPedido> getProdutosPedidos() {
+		return produtosPedidos;
+	}
+
+	public void setProdutosPedidos(Set<ProdutoPedido> produtosPedidos) {
+		this.produtosPedidos = produtosPedidos;
 	}
 
 	@Override

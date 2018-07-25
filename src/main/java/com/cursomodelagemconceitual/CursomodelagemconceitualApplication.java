@@ -18,6 +18,7 @@ import com.cursomodelagemconceitual.domain.PagamentoBoleto;
 import com.cursomodelagemconceitual.domain.PagamentoCartao;
 import com.cursomodelagemconceitual.domain.Pedido;
 import com.cursomodelagemconceitual.domain.Produto;
+import com.cursomodelagemconceitual.domain.ProdutoPedido;
 import com.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 import com.cursomodelagemconceitual.domain.enums.TipoCliente;
 import com.cursomodelagemconceitual.repositories.CategoriaRepository;
@@ -27,6 +28,7 @@ import com.cursomodelagemconceitual.repositories.EnderecoRepository;
 import com.cursomodelagemconceitual.repositories.EstadoRepository;
 import com.cursomodelagemconceitual.repositories.PagamentoRepository;
 import com.cursomodelagemconceitual.repositories.PedidoRepository;
+import com.cursomodelagemconceitual.repositories.ProdutoPedidoRepository;
 import com.cursomodelagemconceitual.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -55,7 +57,10 @@ public class CursomodelagemconceitualApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+
+	@Autowired
+	private ProdutoPedidoRepository produtoPedidoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CursomodelagemconceitualApplication.class, args);
 	}
@@ -119,5 +124,19 @@ public class CursomodelagemconceitualApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+		
+		// ProdutoPedido class
+		ProdutoPedido produtoPedido1 = new ProdutoPedido(pedido1, produto1, 0.00, 1, 2000.00);
+		ProdutoPedido produtoPedido2 = new ProdutoPedido(pedido1, produto3, 0.00, 2, 80.00);
+		ProdutoPedido produtoPedido3 = new ProdutoPedido(pedido2, produto2, 100.00, 1, 800.00);
+
+		pedido1.getProdutosPedidos().addAll(Arrays.asList(produtoPedido1, produtoPedido2));
+		pedido1.getProdutosPedidos().addAll(Arrays.asList(produtoPedido3));
+
+		produto1.getProdutosPedidos().addAll(Arrays.asList(produtoPedido1));
+		produto2.getProdutosPedidos().addAll(Arrays.asList(produtoPedido3));
+		produto3.getProdutosPedidos().addAll(Arrays.asList(produtoPedido2));
+
+		produtoPedidoRepository.saveAll(Arrays.asList(produtoPedido1, produtoPedido2, produtoPedido3));
 	}	
 }
