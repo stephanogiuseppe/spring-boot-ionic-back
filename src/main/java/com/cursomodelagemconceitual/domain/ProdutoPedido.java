@@ -6,12 +6,14 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.cursomodelagemconceitual.domain.pk.ProdutoPedidoPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ProdutoPedido implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@EmbeddedId
 	private ProdutoPedidoPK id = new ProdutoPedidoPK();
 	
@@ -34,6 +36,7 @@ public class ProdutoPedido implements Serializable {
 		return id.getProduto();
 	}
 
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
