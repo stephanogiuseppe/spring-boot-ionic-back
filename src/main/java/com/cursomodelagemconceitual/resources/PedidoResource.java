@@ -28,7 +28,7 @@ public class PedidoResource {
 	}
 	
 	@RequestMapping
-	public ResponseEntity<?> findAll() {
+	public ResponseEntity<List<Pedido>> findAll() {
 		
 		List<Pedido> pedidos = pedidoService.findAll();
 		

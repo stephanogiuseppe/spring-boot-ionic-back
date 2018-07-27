@@ -28,7 +28,7 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping
-	public ResponseEntity<?> findAll() {
+	public ResponseEntity<List<Cliente>> findAll() {
 		
 		List<Cliente> clientes = clienteService.findAll();
 		

@@ -2,6 +2,7 @@ package com.cursomodelagemconceitual.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cursomodelagemconceitual.domain.Categoria;
+import com.cursomodelagemconceitual.dto.CategoriaDTO;
 import com.cursomodelagemconceitual.services.CategoriaService;
 
 @RestController
@@ -28,14 +30,6 @@ public class CategoriaResource {
 		Categoria categoria = categoriaService.find(id);
 		
 		return ResponseEntity.ok().body(categoria);
-	}
-	
-	@RequestMapping
-	public ResponseEntity<?> findAll() {
-		
-		List<Categoria> categorias = categoriaService.findAll();
-		
-		return ResponseEntity.ok().body(categorias);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -56,5 +50,15 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		categoriaService.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		List<Categoria> categorias = categoriaService.findAll();
+
+		List<CategoriaDTO> categoriasDto = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(categoriasDto);
 	}
 }
